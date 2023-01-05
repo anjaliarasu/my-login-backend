@@ -1,0 +1,12 @@
+package com.springbootcrud.repository;
+
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+import com.springbootcrud.model.User;
+
+
+@Repository
+public interface UserRepository extends CrudRepository<User, String> {
+
+}
