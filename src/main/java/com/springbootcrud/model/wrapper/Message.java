@@ -23,7 +23,6 @@ public class Message {
 		this.error = error;
 		this.exception = exception;
 		this.path = path;
-		this.identifier = identifier;
 	}
 
 	public long getTimestamp() {

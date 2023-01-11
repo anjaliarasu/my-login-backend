@@ -11,7 +11,6 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
-//import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -25,13 +24,6 @@ import com.springbootcrud.model.wrapper.MessageType;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-
-/*import com.momento.business.SystemsSettingBuisness;
-import com.momento.framework.customexception.ControllerExceptionHandler;
-import com.momento.framework.logging.repository.LogEntriesRepository;
-import com.momento.model.wrapper.Message;
-import com.momento.model.wrapper.MessageType;
-import com.momento.repository.BookingRepository;*/
 
 /**
  * The Class ControllerExceptionHandler.
@@ -208,36 +200,8 @@ public class ControllerExceptionHandler {
 				request.getRequestURI().substring(request.getContextPath().length()), methodArgumentNotValidException);
 	}
 
+	
 	/**
-	 * Handle persistent object exception.
-	 *
-	 * @param request              the request
-	 * @param persistenceException the persistence exception
-	 * @return the message
-	 */
-	/*
-	 * @ExceptionHandler(value = { PersistenceException.class })
-	 * 
-	 * @ResponseStatus(value = HttpStatus.NOT_ACCEPTABLE) public Message
-	 * handlePersistentObjectException(HttpServletRequest request,
-	 * PersistenceException persistenceException) { StringBuilder messages = new
-	 * StringBuilder();
-	 * 
-	 * if (persistenceException != null) { Locale currentLocale =
-	 * LocaleContextHolder.getLocale();
-	 * messages.append(messageSource.getMessage(persistenceException.getMessage(),
-	 * null, persistenceException.getMessage(), currentLocale)); }
-	 * 
-	 * logger.error("", persistenceException);
-	 * 
-	 * return ConstructMessage(MessageType.ERROR, messages.toString(),
-	 * System.currentTimeMillis(),
-	 * String.valueOf(HttpStatus.NOT_ACCEPTABLE.value()), "Not Acceptable",
-	 * PersistenceException.class.getName(),
-	 * request.getRequestURI().substring(request.getContextPath().length()),
-	 * persistenceException); }
-	 * 
-	 */	/**
 	 * Error.
 	 *
 	 * @param request   the request

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springbootcrud.business.DoctorsBusiness;
-import com.springbootcrud.framework.customexception.ControllerExceptionHandler;
 import com.springbootcrud.model.Doctors;
 
 import javax.validation.Valid;
@@ -46,12 +45,7 @@ public class DoctorsController {
 		Doctors doctor;
 		logger.info("Getting doctors with id:" + doctorid);
 		doctor = doctorService.getDoctorsById(doctorid);
-		//if(doctor!=null)
-			return new ResponseEntity<>(doctor, HttpStatus.OK);
-			/*
-			 * else { logger.info("Doctor with id " + doctorid+" not found"); return new
-			 * ResponseEntity<>(doctor, HttpStatus.NOT_FOUND); }
-			 */
+		return new ResponseEntity<>(doctor, HttpStatus.OK);
 
 	}
 
@@ -73,17 +67,7 @@ public class DoctorsController {
 
 		Doctors doctor = doctorService.saveOrUpdate(doctors);
 
-		/*
-		 * if(doctor!=null) {logger.info("Saving new doctor successful");
-		 */	return new ResponseEntity<>(doctor, HttpStatus.CREATED);
-		
-		/*
-		 * } else { return new ResponseEntity<>(doctor,
-		 * HttpStatus.INTERNAL_SERVER_ERROR);
-		 * 
-		 * }
-		 */
-			
+		return new ResponseEntity<>(doctor, HttpStatus.CREATED);
 
 	}
 
@@ -93,14 +77,7 @@ public class DoctorsController {
 	public ResponseEntity<Doctors> update(@Valid @RequestBody Doctors doctors) {
 		logger.info("Updating existing doctor");
 
-		Doctors doctor = doctorService.update(doctors,doctors.getId());
-		/*if(doctor!=null)
-		{
-		logger.info("Updating existing doctor successful");
-	*/	return new ResponseEntity<>(doctor, HttpStatus.OK);
-		/*}
-		else
-			return new ResponseEntity<>(doctor, HttpStatus.NOT_FOUND);
+		Doctors doctor = doctorService.update(doctors, doctors.getId());
+		return new ResponseEntity<>(doctor, HttpStatus.OK);
 	}
-*/}
 }

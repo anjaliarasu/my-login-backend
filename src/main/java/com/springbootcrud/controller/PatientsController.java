@@ -45,12 +45,8 @@ public class PatientsController {
 		Patients patient;
 		logger.info("Getting patients with id:" + patientid);
 		patient = patientService.getPatientsById(patientid);
-		//if(patient!=null)
 			return new ResponseEntity<>(patient, HttpStatus.OK);
-			/*
-			 * else { logger.info("Patient with id " + patientid+" not found"); return new
-			 * ResponseEntity<>(patient, HttpStatus.NOT_FOUND); }
-			 */
+			
 	}
 
 	// creating a delete mapping that deletes a specified doctor
@@ -71,7 +67,6 @@ public class PatientsController {
 
 		Patients patient = patientService.saveOrUpdate(patients);
 
-		//if(patient!=null)
 		logger.info("Saving new patient successful");
 
 		return new ResponseEntity<>(patient, HttpStatus.CREATED);
@@ -85,7 +80,6 @@ public class PatientsController {
 		logger.info("Updating existing patient");
 
 		Patients patient = patientService.saveOrUpdate(patients);
-		//if(patient!=null)
 		logger.info("Updating existing doctor successful");
 
 		return new ResponseEntity<>(patient, HttpStatus.OK);
