@@ -10,14 +10,14 @@ import com.springbootcrud.repository.DoctorRepository;
 
 public interface PatientsBusiness {
 
-	//getting all books record by using the method findaAll() of CrudRepository  
+	//getting all patients record by using the method findaAll() of CrudRepository  
 	public List<Patients> getAllPatients();   
 	
 	//getting a specific record by using the method findById() of CrudRepository  
 	public Patients getPatientsById(int id)  ; 
 	
 	//saving a specific record by using the method save() of CrudRepository  
-	public void saveOrUpdate(Patients patients)   ;
+	public Patients saveOrUpdate(Patients patients)   ;
 	 
 	//deleting a specific record by using the method deleteById() of CrudRepository  
 	public void delete(int id)   ;

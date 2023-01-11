@@ -2,7 +2,15 @@ package com.springbootcrud.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Pattern;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,38 +25,69 @@ import com.springbootcrud.model.Patients;
 @RestController
 public class PatientsController {
 
+	/** The logger. */
+	private Logger logger = LogManager.getLogger(PatientsController.class.getName());
+
 	@Autowired
-	PatientsBusiness patientservice;
-	//creating a get mapping that retrieves all the Patients detail from the database   
-	@GetMapping("/patients")  
-	private List<Patients> getAllPatients()   
-	{  
-	return patientservice.getAllPatients();  
-	}  
-	//creating a get mapping that retrieves the detail of a specific patient  
-	@GetMapping("/patients/{patientid}")  
-	private Patients getBooks(@PathVariable("patientid") int patientid)   
-	{  
-	return patientservice.getPatientsById(patientid); 
-	}  
-	//creating a delete mapping that deletes a specified patient  
-	@DeleteMapping("/patients/{patientid}")  
-	private void deleteBook(@PathVariable("patientid") int patientid)   
-	{  
-		patientservice.delete(patientid);  
-	}  
-	//creating post mapping that post the patient detail in the database  
-	@PostMapping("/patients")  
-	private int saveBook(@RequestBody Patients patients)   
-	{  
-		patientservice.saveOrUpdate(patients);  
-	return patients.getId();
-	}  
-	//creating put mapping that updates the patient detail   
-	@PutMapping("/patients")  
-	private Patients update(@RequestBody Patients patients)   
-	{  
-		patientservice.saveOrUpdate(patients);  
-	return patients;  
-	}  
+	PatientsBusiness patientService;
+
+	// creating a get mapping that retrieves all the patients detail from the
+	// database
+	@GetMapping("/patients")
+	public ResponseEntity<List<Patients>> getAllPatients() {
+		logger.info("Getting all patients");
+		return new ResponseEntity<>(patientService.getAllPatients(), HttpStatus.OK);
+	}
+
+	// creating a get mapping that retrieves the detail of a specific doctor
+	@GetMapping("/patients/{doctorid}")
+	public ResponseEntity<Patients> getPatients(@Pattern(regexp = "^[0-9]*$") @PathVariable("patientid") int patientid) {
+		Patients patient;
+		logger.info("Getting patients with id:" + patientid);
+		patient = patientService.getPatientsById(patientid);
+		//if(patient!=null)
+			return new ResponseEntity<>(patient, HttpStatus.OK);
+			/*
+			 * else { logger.info("Patient with id " + patientid+" not found"); return new
+			 * ResponseEntity<>(patient, HttpStatus.NOT_FOUND); }
+			 */
+	}
+
+	// creating a delete mapping that deletes a specified doctor
+	@DeleteMapping("/patients/{patientid}")
+	@PreAuthorize("hasRole('Admin')")
+	public ResponseEntity<Patients> deletePatient(@Pattern(regexp = "^[0-9]*$") @PathVariable("patient") int patient) {
+		logger.info("Deleting patients with id:" + patient);
+		patientService.delete(patient);
+		return new ResponseEntity<>(HttpStatus.GONE);
+
+	}
+
+	// creating post mapping that post the doctor detail in the database
+	@PostMapping("/patients")
+	@PreAuthorize("hasRole('Admin')")
+	public ResponseEntity<Patients> savePatients(@Valid @RequestBody Patients patients) {
+		logger.info("Saving new patient");
+
+		Patients patient = patientService.saveOrUpdate(patients);
+
+		//if(patient!=null)
+		logger.info("Saving new patient successful");
+
+		return new ResponseEntity<>(patient, HttpStatus.CREATED);
+
+	}
+
+	// creating put mapping that updates the doctor detail
+	@PutMapping("/patients")
+	@PreAuthorize("hasRole('Admin')")
+	public ResponseEntity<Patients> update(@Valid @RequestBody Patients patients) {
+		logger.info("Updating existing patient");
+
+		Patients patient = patientService.saveOrUpdate(patients);
+		//if(patient!=null)
+		logger.info("Updating existing doctor successful");
+
+		return new ResponseEntity<>(patient, HttpStatus.OK);
+	}
 }

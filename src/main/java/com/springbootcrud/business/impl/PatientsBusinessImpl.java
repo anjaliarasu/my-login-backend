@@ -31,8 +31,8 @@ public class PatientsBusinessImpl implements PatientsBusiness {
 	}
 
 	@Override
-	public void saveOrUpdate(Patients patients) {
-		patientsRepository.save(patients);
+	public Patients saveOrUpdate(Patients patients) {
+		return patientsRepository.save(patients);
 	}
 
 	@Override

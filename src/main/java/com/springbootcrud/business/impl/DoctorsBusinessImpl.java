@@ -51,7 +51,7 @@ public class DoctorsBusinessImpl implements DoctorsBusiness {
 	}
 
 	@Override
-	public void update(Doctors doctors, int doctorid) {
+	public Doctors update(Doctors doctors, int doctorid) {
 		Doctors doctor= doctorsRepository.findById(doctorid).orElseThrow(()->
 		new NoSuchElementException("Doctor with id "+doctorid+" not found"));
 		
@@ -61,7 +61,7 @@ public class DoctorsBusinessImpl implements DoctorsBusiness {
 		doctor.setDepartment(doctors.getDepartment());
 		doctor.setCity(doctors.getCity());
 		doctor.setPatients(doctors.getPatients());
-		doctorsRepository.save(doctor);
+		return doctorsRepository.save(doctor);
 		
 	}
 

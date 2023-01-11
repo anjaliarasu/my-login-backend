@@ -25,6 +25,10 @@ import javax.validation.constraints.Size;
 public class Doctors {
 
 
+	public Doctors() {
+		super();
+	}
+
 	/** The id. */
 
 	@Id
@@ -54,6 +58,27 @@ public class Doctors {
 	@Column(name = "DEPT", length = 150)
 	private String department;
 	
+	@JsonIgnore
+	@JsonIgnoreProperties("doctor")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "doctor")
+	private Set<Patients> patients;
+
+
+	public Doctors(int id, String name, String emailAddress,
+			@Pattern(regexp = "^(0|[0-9][0-9]*)$") @Size(min = 10, max = 10, message = "Length should be max 15") String phoneNumber,
+			String city, @NotNull(message = "Department cannot be null") String department, Set<Patients> patients) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.emailAddress = emailAddress;
+		this.phoneNumber = phoneNumber;
+		this.city = city;
+		this.department = department;
+		this.patients = patients;
+	}
+	public Doctors(int i) {
+		this.id=i;
+	}
 	public String getDepartment() {
 		return department;
 	}
@@ -61,12 +86,6 @@ public class Doctors {
 	public void setDepartment(String department) {
 		this.department = department;
 	}
-
-	@JsonIgnore
-	@JsonIgnoreProperties("doctor")
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "doctor")
-	private Set<Patients> patients;
-
 
 	
 	public int getId() {

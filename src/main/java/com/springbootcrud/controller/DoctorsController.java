@@ -46,7 +46,13 @@ public class DoctorsController {
 		Doctors doctor;
 		logger.info("Getting doctors with id:" + doctorid);
 		doctor = doctorService.getDoctorsById(doctorid);
-		return new ResponseEntity<>(doctor, HttpStatus.OK);
+		//if(doctor!=null)
+			return new ResponseEntity<>(doctor, HttpStatus.OK);
+			/*
+			 * else { logger.info("Doctor with id " + doctorid+" not found"); return new
+			 * ResponseEntity<>(doctor, HttpStatus.NOT_FOUND); }
+			 */
+
 	}
 
 	// creating a delete mapping that deletes a specified doctor
@@ -55,8 +61,7 @@ public class DoctorsController {
 	public ResponseEntity<Doctors> deleteDoctor(@Pattern(regexp = "^[0-9]*$") @PathVariable("doctorid") int doctorid) {
 		logger.info("Deleting doctors with id:" + doctorid);
 		doctorService.delete(doctorid);
-		logger.info("Deleting doctors with id:" + doctorid + " successful");
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.GONE);
 
 	}
 
@@ -68,9 +73,17 @@ public class DoctorsController {
 
 		Doctors doctor = doctorService.saveOrUpdate(doctors);
 
-		logger.info("Saving new doctor successful");
-
-		return new ResponseEntity<>(doctor, HttpStatus.OK);
+		/*
+		 * if(doctor!=null) {logger.info("Saving new doctor successful");
+		 */	return new ResponseEntity<>(doctor, HttpStatus.CREATED);
+		
+		/*
+		 * } else { return new ResponseEntity<>(doctor,
+		 * HttpStatus.INTERNAL_SERVER_ERROR);
+		 * 
+		 * }
+		 */
+			
 
 	}
 
@@ -80,9 +93,14 @@ public class DoctorsController {
 	public ResponseEntity<Doctors> update(@Valid @RequestBody Doctors doctors) {
 		logger.info("Updating existing doctor");
 
-		Doctors doctor = doctorService.saveOrUpdate(doctors);
+		Doctors doctor = doctorService.update(doctors,doctors.getId());
+		/*if(doctor!=null)
+		{
 		logger.info("Updating existing doctor successful");
-
-		return new ResponseEntity<>(doctor, HttpStatus.OK);
+	*/	return new ResponseEntity<>(doctor, HttpStatus.OK);
+		/*}
+		else
+			return new ResponseEntity<>(doctor, HttpStatus.NOT_FOUND);
 	}
+*/}
 }

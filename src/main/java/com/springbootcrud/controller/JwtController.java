@@ -1,6 +1,7 @@
 package com.springbootcrud.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.springbootcrud.business.impl.*;
 import com.springbootcrud.model.wrapper.JwtRequest;
 import com.springbootcrud.model.wrapper.JwtResponse;
+
+@Profile("!test")
 
 @RestController
 @CrossOrigin
