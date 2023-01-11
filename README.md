@@ -8,20 +8,27 @@ The following was discovered as part of building this project:
 This project focuses on creating Rest APIS for Patients and Doctors.
 
 *I have focused on Providing spring security for the CRUD Api's to protect from unauthorized access.
+
 *I have handled exception handling globally using ControllerAdvice.
+
 *Unit tests included for DoctorsController. Due to my workloads and time constraints, I have added exception handling and unit tests for Doctor CRUD flow alone. 
 
 Without authentication users cannot access the Api's.
 Upon authentication JWT token will be sent, Which we have to set in bearer part of authorization header to access CRUD API's.
 
 ***************************************************
-             Points to remember
+Points to remember
 ***************************************************
--Role based Authorization has been implemented, i.e. Only Admin has rights to save and delete the entries, Other users can only access GET API's. 	
+-Role based Authorization has been implemented, i.e. Only Admin has rights to save and delete the entries, Other users can only access GET API's. 					
+
+
 -By default upon application start up one admin role is created with 
   username:admin123
   password:admin@12345
+  
+  
 -For newly created users by default the roles will be user role.  
+
 
 # Getting Started
 
@@ -51,7 +58,9 @@ Sno| HTTP Verbs | Endpoints | Action |
 12.| DELETE | /patients/{id} | To delete a patient with id |
 
 1.| POST | /users | To add users |
+
 Endpoint: http://localhost:8080/users
+
 Payload:
 {
     "userName":"Anjali",
@@ -59,6 +68,7 @@ Payload:
     "userLastName":"T",
     "userPassword":"1234"
 }
+
 Response:
 {
     "userName": "Anjali",
@@ -75,13 +85,16 @@ Response:
 
 2.| POST | /authenticate |
 
+
 Endpoint:http://localhost:8080/authenticate
+
 
 Payload:
 {
     "userName":"Anjali",
     "userPassword":"1234"
 }
+
 
 Response:
 {
@@ -100,9 +113,12 @@ Response:
     "jwtToken": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBbmphbGkiLCJleHAiOjE2NzI5NTk3OTUsImlhdCI6MTY3Mjk0MTc5NX0.8zoAJu0WO4N5OtJy21LY9k_YdlbDk0e1v5l6ESoo3IqH6PEnDtt2i5PMpyOmBP-EQmZiAn3G1c4LwZR_E5UkBQ"
 }
 
+
 This token should be used in authorization bearer part of further requests for crud apis
 
+
 [3]. Endpoint :http://localhost:8080/doctors
+
 If we access [3] without token
 {
     "timestamp": "2023-01-05T18:23:11.830+00:00",
@@ -111,11 +127,15 @@ If we access [3] without token
     "path": "/doctors"
 }
 
+
 if accessed with token
+
 
 [4].Endpoint :http://localhost:8080/doctors/1
 
+
 [5]. Endpoint:http://localhost:8080/doctors
+
 
 Payload: {
     "name":"Dr. Asha",
@@ -125,7 +145,9 @@ Payload: {
     "phoneNumber":9897645324
 }
 
+
 if we post a data with existing email or phone number it shows DataIntegrityViolationException exception
+
 
 if payload: {
     "name":"Dr. Aarthi",
@@ -134,6 +156,7 @@ if payload: {
     "department":"ortho",
     "phoneNumber":9897645324
 }
+
 
 Response:
 {
@@ -147,7 +170,9 @@ Response:
     "identifier": null
 }
 
+
 similarly, below are few scenarios which throws validation errors and exception 
+
 payload: 
 {
     "name":"Dr. Dhanush",
@@ -156,6 +181,7 @@ payload:
     "department":"ortho",
     "phoneNumber":9895345324
 }
+
 Response:
 {
     "timestamp": 1672922809011,
@@ -167,6 +193,7 @@ Response:
     "path": "/doctors",
     "identifier": null
 }
+
 payload: 
 {
     "name":"Dr. Dhanush",
@@ -175,6 +202,7 @@ payload:
     "department":null,
     "phoneNumber":8765432098
 }
+
 Response:
 {
     "timestamp": 1672925012304,
@@ -188,7 +216,9 @@ Response:
 }
 
 
+
 [6]. Put : http://localhost:8080/doctors
+
 
 payload:{
     "id":2,
@@ -199,11 +229,15 @@ payload:{
     "phoneNumber":9997645324
 }
 
+
 [7].http://localhost:8080/doctors/1
+
 
 [8].Get: http://localhost:8080/patients
 
+
 [9].Post: http://localhost:8080/patients
+
 Payload:
 {
    "name":"Anand",
@@ -213,6 +247,7 @@ Payload:
    "type":"Inpatient",
    "doctor":{"id":2}
 }
+
 response:
 {
 "id":1,
@@ -224,10 +259,14 @@ response:
    "doctor":{"id":2}
 }
 
+
 [10]. Patients-Get by id
+
 http://localhost:8080/patients/1
 
+
 [11].PUT http://localhost:8080/patients
+
 Payload:{
 "id":1,
    "name":"Anand N",
@@ -238,12 +277,16 @@ Payload:{
    "doctor":{"id":2}
 }
 
+
 [12].DELETE http://localhost:8080/patients/1
+
 
 
 Some scenarios when user role tries for post or delete request,
 
+
 try [5] with user login token
+
 
 following exception will be got 
 
