@@ -33,11 +33,7 @@ public class AuthController {
 	@PostMapping("/signup")
 	public ResponseEntity<User> registerNewUser(@RequestBody User user) {
 		User userResp=userService.registerNewUser(user);
-		if(userResp!=null)
-			return new ResponseEntity<>(userService.registerNewUser(userResp), HttpStatus.CREATED);
-		else
-			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-	
+			return new ResponseEntity<>(userResp, HttpStatus.CREATED);
 	}
 	
 }
